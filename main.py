@@ -77,3 +77,4 @@ def selectionSort(arr):
         for j in range(i+1, length):
             if arr[j] < arr[min_index]:
                 min_index = j
+            arr[i], arr[min_index] = arr[min_index], arr[i]
