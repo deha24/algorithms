@@ -29,7 +29,7 @@ def shell_sort(arr):
                 k-=gap[i]
             arr[k+gap[i]]=key
     return arr
-def heapify(index,sorting,indexstop):
+def heapify(arr,index,sorting,indexstop):
         if sorting==False:
             if indexstop<=(2*index)+1:
                 return 0
@@ -39,11 +39,11 @@ def heapify(index,sorting,indexstop):
         if arr[(2*index)+1]>=arr[(2*index)+2] or (sorting==True and indexstop<=(2*index)+2):
             if arr[index]<arr[(2*index)+1] and indexstop>(2*index)+1:
                 arr[index],arr[(2*index)+1]=arr[(2*index)+1],arr[index]
-                heapify((2*index)+1,sorting,indexstop)
+                heapify(arr,(2*index)+1,sorting,indexstop)
         else:
             if arr[index]<arr[(2*index)+2] and indexstop>(2*index)+2:
                 arr[index],arr[(2*index)+2]=arr[(2*index)+2],arr[index]
-                heapify((2*index)+2,sorting,indexstop)
+                heapify(arr,(2*index)+2,sorting,indexstop)
 
 def heap_sort(arr):
     length=len(arr)
@@ -55,4 +55,5 @@ def heap_sort(arr):
             arr[i],arr[(2*i)+2]=arr[(2*i)+2],arr[i]
     for i in range(length):
         arr[0],arr[length-i]=arr[length-i],arr[0]
-        heapify(0,True,length-1)
+        heapify(arr,0,True,length-1)
+    return arr
