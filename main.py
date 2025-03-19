@@ -69,3 +69,9 @@ def insertionSort(arr):
             arr[j+1] = arr[j]
             j = j - 1
         arr[j+1] = key
+
+def selectionSort(arr):
+    length = len(arr)
+    for i in range(length):
+        min_index = i
+        
