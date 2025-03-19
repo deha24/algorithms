@@ -57,3 +57,8 @@ def heap_sort(arr):
         arr[0],arr[length-i]=arr[length-i],arr[0]
         heapify(arr,0,True,length-1)
     return arr
+
+def insertionSort(arr):
+    length = len(arr)
+    if length <= 1:
+        return
