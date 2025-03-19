@@ -29,4 +29,12 @@ def shell_sort(arr):
                 k-=gap[i]
             arr[k+gap[i]]=key
     return arr
-    
+
+def heap_sort(arr):
+    length=len(arr)
+    for i in range(int(length//2)-1,-1,-1):
+        if arr[(2*i)+1]>=arr[(2*i)+2]:
+            arr[i],arr[(2*i)+1]=arr[(2*i)+1],arr[i]
+
+        else:
+            arr[i],arr[(2*i)+2]=arr[(2*i)+2],arr[i]
