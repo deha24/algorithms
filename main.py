@@ -38,7 +38,7 @@ def heapify(arr,index,sorting,indexstop):
             if indexstop<(2*index)+2:
                 return 0
         if arr[(2*index)+1]>=arr[(2*index)+2] or (sorting==True and indexstop<=(2*index)+2):
-            if arr[index]<arr[(2*index)+1] and indexstop>(2*index)+1:
+            if (arr[index]<arr[(2*index)+1]) and indexstop>(2*index)+1:
                 arr[index],arr[(2*index)+1]=arr[(2*index)+1],arr[index]
                 heapify(arr,(2*index)+1,sorting,indexstop)
         else:
@@ -48,15 +48,18 @@ def heapify(arr,index,sorting,indexstop):
 
 def heap_sort(arr):
     length=len(arr)
-    for i in range(int(length//2)-1,-1,-1):
+    for i in range(length//2-1,-1,-1):
         if arr[(2*i)+1]>=arr[(2*i)+2]:
             arr[i],arr[(2*i)+1]=arr[(2*i)+1],arr[i]
-
+            heapify(arr,(2*i)+1,False,length)
         else:
             arr[i],arr[(2*i)+2]=arr[(2*i)+2],arr[i]
-    for i in range(length-1):
+            heapify(arr,(2*i)+2,False,length)
+
+    for i in range(1,length):
+        print(arr,arr[i])
         arr[0],arr[length-i]=arr[length-i],arr[0]
-        heapify(arr,0,True,length-1)
+        heapify(arr,0,True,length-i)
     return arr
 
 def insertionSort(arr):
