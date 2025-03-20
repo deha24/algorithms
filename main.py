@@ -5,8 +5,9 @@ python3 HelloWorld.py
 Python as a interpreted language executes code directly without a separate compilation step, 
 translating and running the source code on-the-fly during execution.
 """
-
+import sys
 from HelloWorld import HelloWorld
+
 
 # Checks if the Python script is being run as the main program (not imported as a module)
 def shell_sort(arr):
@@ -53,7 +54,7 @@ def heap_sort(arr):
 
         else:
             arr[i],arr[(2*i)+2]=arr[(2*i)+2],arr[i]
-    for i in range(length):
+    for i in range(length-1):
         arr[0],arr[length-i]=arr[length-i],arr[0]
         heapify(arr,0,True,length-1)
     return arr
@@ -89,3 +90,44 @@ def divqSort():
 
     (array[i + 1], array[high]) = (array[high], array[i + 1])
     return i + 1
+
+def sort_using_algorithm(data, algorithm):
+    # This function takes the algorithm identifier as input
+    # However, it always uses the sorted function in Python
+
+    if algorithm == 1:
+        sorted_data = shell_sort(data)
+    elif algorithm == 2:
+        sorted_data = heap_sort(data)
+    elif algorithm == 3:
+        sorted_data = insertionSort(data)
+    elif algorithm == 4:
+        sorted_data = selectionSort(data)
+    elif algorithm == 5:
+        sorted_data = divqSort(data)
+
+    return sorted_data
+
+def main():
+    # Command-line arguments: python script.py --algorithm <algorithm_number>
+    if len(sys.argv) != 3 or sys.argv[1] != "--algorithm":
+        print("Usage: python script.py --algorithm <algorithm_number>")
+        sys.exit(1)
+
+    algorithm_number = int(sys.argv[2])
+
+    # Read input data from standard input until the end of file (EOF)
+    input=sys.stdin.read().split()
+    try:
+        data = [int(x) for x in input[1:]]
+    except EOFError:
+        print("Error reading input.")
+
+    # Perform sorting using the specified algorithm (ignored in this example)
+    sorted_data = sort_using_algorithm(data, algorithm_number)
+
+    # Print the sorted data
+    print("Sorted data:", sorted_data[0:10])
+
+if __name__ == "__main__":
+    main()
