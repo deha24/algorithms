@@ -5,8 +5,9 @@ python3 HelloWorld.py
 Python as a interpreted language executes code directly without a separate compilation step, 
 translating and running the source code on-the-fly during execution.
 """
-
+import sys
 from HelloWorld import HelloWorld
+
 
 # Checks if the Python script is being run as the main program (not imported as a module)
 import sys
@@ -39,7 +40,7 @@ def heapify(arr,index,sorting,indexstop):
             if indexstop<(2*index)+2:
                 return 0
         if arr[(2*index)+1]>=arr[(2*index)+2] or (sorting==True and indexstop<=(2*index)+2):
-            if arr[index]<arr[(2*index)+1] and indexstop>(2*index)+1:
+            if (arr[index]<arr[(2*index)+1]) and indexstop>(2*index)+1:
                 arr[index],arr[(2*index)+1]=arr[(2*index)+1],arr[index]
                 heapify(arr,(2*index)+1,sorting,indexstop)
         else:
@@ -49,15 +50,18 @@ def heapify(arr,index,sorting,indexstop):
 
 def heap_sort(arr):
     length=len(arr)
-    for i in range(int(length//2)-1,-1,-1):
+    for i in range(length//2-1,-1,-1):
         if arr[(2*i)+1]>=arr[(2*i)+2]:
             arr[i],arr[(2*i)+1]=arr[(2*i)+1],arr[i]
-
+            heapify(arr,(2*i)+1,False,length)
         else:
             arr[i],arr[(2*i)+2]=arr[(2*i)+2],arr[i]
-    for i in range(length):
+            heapify(arr,(2*i)+2,False,length)
+
+    for i in range(1,length):
+        print(arr,arr[i])
         arr[0],arr[length-i]=arr[length-i],arr[0]
-        heapify(arr,0,True,length-1)
+        heapify(arr,0,True,length-i)
     return arr
 
 def insertionSort(arr):
@@ -100,13 +104,11 @@ def sort_using_algorithm(data, algorithm):
     elif algorithm == 2:
         sorted_data = heap_sort(data)
     elif algorithm == 3:
-        sorted_data=insertionSort(data)
+        sorted_data = insertionSort(data)
     elif algorithm == 4:
-        sorted_data=selectionSort(data)
-    elif algorithm == 5:    
-        sorted_data=divqSort(data)
-    sorted_data = sorted(data)
-
+        sorted_data = selectionSort(data)
+    elif algorithm == 5:
+        sorted_data = divqSort(data)
     return sorted_data
 
 def main():
@@ -130,6 +132,6 @@ def main():
     # Print the sorted data
     print("Sorted data:", sorted_data[0:10])
 
-if __name__ == "__main__":  
+
+if __name__ == "__main__":
     main()
-    print(HelloWorld())
