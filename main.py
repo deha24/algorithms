@@ -16,13 +16,15 @@ def shell_sort(arr):
     length = len(arr)
     gap = [1]
     k=0
+    #generating the gap using Segwick's formula
     while True:
-        tmp=(4**(k+1))+(3*(2**k))+1
+        tmp=(4**(k+1))+(3*(2**k))+1 #Segwick's formula
         if tmp<=length:
             gap.append(tmp)
         else:
             break
         k+=1
+    #sorting the array using the gap and insertion sort
     for i in range(len(gap)-1,-1,-1):
         for j in range(0,length,gap[i]):
             key=arr[j]
@@ -32,6 +34,13 @@ def shell_sort(arr):
                 k-=gap[i]
             arr[k+gap[i]]=key
     return arr
+
+
+#bringing the largest element to the top or smallest element to the bottom
+#sorting is true if we are sorting the heap
+#sorting is false if we are creating the heap
+#index=current element index
+#indexstop is used to indetify the last element in heap index (used while sorting the heap)
 def heapify(arr,index,sorting,indexstop):
         if sorting==False:
             if indexstop<=(2*index)+1:
@@ -39,6 +48,7 @@ def heapify(arr,index,sorting,indexstop):
         else:
             if indexstop<(2*index)+2:
                 return 0
+        #pulling down element in the heap if smallest
         if arr[(2*index)+1]>=arr[(2*index)+2] or (sorting==True and indexstop<=(2*index)+2):
             if (arr[index]<arr[(2*index)+1]) and indexstop>(2*index)+1:
                 arr[index],arr[(2*index)+1]=arr[(2*index)+1],arr[index]
@@ -50,6 +60,7 @@ def heapify(arr,index,sorting,indexstop):
 
 def heap_sort(arr):
     length=len(arr)
+    #creating the heap
     for i in range(length//2-1,-1,-1):
         if arr[(2*i)+1]>=arr[(2*i)+2]:
             arr[i],arr[(2*i)+1]=arr[(2*i)+1],arr[i]
@@ -57,7 +68,7 @@ def heap_sort(arr):
         else:
             arr[i],arr[(2*i)+2]=arr[(2*i)+2],arr[i]
             heapify(arr,(2*i)+2,False,length)
-
+    #sorting the heap
     for i in range(1,length):
         print(arr,arr[i])
         arr[0],arr[length-i]=arr[length-i],arr[0]
