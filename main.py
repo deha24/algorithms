@@ -78,34 +78,40 @@ def heap_sort(arr):
 def insertionSort(arr):
     length = len(arr)
     if length <= 1:
-        return
+        return  # If the array has 1 or 0 elements, it's already sorted
     for i in range(1, length):
-        key = arr[i]
-        j = i - 1
-        while j>=0 and key<arr[j]:
-            arr[j+1] = arr[j]
+        key = arr[i]  # Select the element to be inserted
+        j = i - 1  # Initialize the index of the previous element
+        while j >= 0 and key < arr[j]:  # Move elements of arr[0..i-1], that are greater than key, to one position ahead of their current position
+            arr[j + 1] = arr[j]
             j = j - 1
-        arr[j+1] = key
+        arr[j + 1] = key  # Place key at after the element just smaller than it
 
 def selectionSort(arr):
     length = len(arr)
     for i in range(length):
-        min_index = i
-        for j in range(i+1, length):
-            if arr[j] < arr[min_index]:
-                min_index = j
-            arr[i], arr[min_index] = arr[min_index], arr[i]
+        min_index = i  # Find the minimum element in remaining unsorted array
+        for j in range(i + 1, length):  # Traverse the unsorted subarray to find the minimum element
+            if arr[j] < arr[min_index]:  # Update the index of the minimum element if a smaller element is found
+            min_index = j
+        arr[i], arr[min_index] = arr[min_index], arr[i]  # Swap the found minimum element with the first element
 
-def divqSort():
-    pivot = array[high]
-    i = low - 1
-    for j in range(low, high):
-        if array[j] <= pivot:
+def divqSort(arr, low, high):
+    pivot = arr[high]  # Select the pivot element
+    i = low - 1  # Initialize the index of the smaller element
+    for j in range(low, high):  # Traverse through all elements and rearrange them based on the pivot
+        if arr[j] <= pivot:
             i = i + 1
-            (array[i], array[j]) = (array[j], array[i])
+            (arr[i], arr[j]) = (arr[j], arr[i])  # Swap elements to place smaller elements before the pivot
 
-    (array[i + 1], array[high]) = (array[high], array[i + 1])
+    (arr[i + 1], arr[high]) = (arr[high], arr[i + 1])  # Place the pivot element in its correct position
     return i + 1
+
+def quickSort(arr, low, high):
+    if low < high:
+        pi = divqSort(arr, low, high)  # Partition the array and get the pivot index
+        quickSort(arr, low, pi - 1)  # Recursively sort the elements before the pivot
+        quickSort(arr, pi + 1, high)  # Recursively sort the elements after the pivot
 
 def sort_using_algorithm(data, algorithm):
     # This function takes the algorithm identifier as input
