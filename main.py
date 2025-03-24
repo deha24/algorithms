@@ -11,6 +11,7 @@ from HelloWorld import HelloWorld
 
 # Checks if the Python script is being run as the main program (not imported as a module)
 import sys
+import random
 
 def shell_sort(arr):
     length = len(arr)
@@ -85,6 +86,7 @@ def insertionSort(arr):
             arr[j + 1] = arr[j]
             j = j - 1
         arr[j + 1] = key  # Place key at after the element just smaller than it
+    return arr
 
 def selectionSort(arr):
     length = len(arr)
@@ -94,23 +96,40 @@ def selectionSort(arr):
             if arr[j] < arr[min_index]:  # Update the index of the minimum element if a smaller element is found
                 min_index = j
         arr[i], arr[min_index] = arr[min_index], arr[i]  # Swap the found minimum element with the first element
+    return arr
 
-def divqSort(arr, low, high):
-    pivot = arr[high]  # Select the pivot element
-    i = low - 1  # Initialize the index of the smaller element
-    for j in range(low, high):  # Traverse through all elements and rearrange them based on the pivot
-        if arr[j] <= pivot:
-            i = i + 1
-            (arr[i], arr[j]) = (arr[j], arr[i])  # Swap elements to place smaller elements before the pivot
+def divqSort(arr, low, high, pivot_type='first'):
+    """
+    This function partitions the array around a pivot element.
+    The pivot can be the first element or a random element.
+    """
+    if pivot_type == 'first':
+        pivot = arr[low]  # Use the first element as pivot
+    elif pivot_type == 'random':
+        pivot_index = random.randint(low, high)  # Choose a random pivot
+        pivot = arr[pivot_index]  # Use the random element as pivot
+        arr[pivot_index], arr[low] = arr[low], arr[pivot_index]  # Swap pivot with the first element
 
-    (arr[i + 1], arr[high]) = (arr[high], arr[i + 1])  # Place the pivot element in its correct position
-    return i + 1
+    i = low + 1  # Initialize the smaller element index
+    for j in range(low + 1, high + 1):
+        if arr[j] <= pivot:  # If current element is smaller than or equal to pivot
+            arr[i], arr[j] = arr[j], arr[i]  # Swap the elements
+            i = i + 1  # Increment the smaller element index
 
-def quickSort(arr, low, high):
+    arr[low], arr[i - 1] = arr[i - 1], arr[low]  # Swap the pivot element with the element at i-1
+    return i - 1  # Return the partitioning index
+
+def quickSort(arr, low, high, pivot_type='first'):
+    """
+    This function implements the QuickSort algorithm.
+    It recursively sorts the array by partitioning it around a pivot element.
+    The pivot can be the first element or a random element.
+    """
     if low < high:
-        pi = divqSort(arr, low, high)  # Partition the array and get the pivot index
-        quickSort(arr, low, pi - 1)  # Recursively sort the elements before the pivot
-        quickSort(arr, pi + 1, high)  # Recursively sort the elements after the pivot
+        pi = divqSort(arr, low, high, pivot_type)  # Partition the array
+        quickSort(arr, low, pi - 1, pivot_type)  # Recursively sort the left subarray
+        quickSort(arr, pi + 1, high, pivot_type)  # Recursively sort the right subarray
+    return arr  # Return the sorted array
 
 def sort_using_algorithm(data, algorithm):
     # This function takes the algorithm identifier as input
