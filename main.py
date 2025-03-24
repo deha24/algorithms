@@ -70,7 +70,6 @@ def heap_sort(arr):
             heapify(arr,(2*i)+2,False,length)
     #sorting the heap
     for i in range(1,length):
-        print(arr,arr[i])
         arr[0],arr[length-i]=arr[length-i],arr[0]
         heapify(arr,0,True,length-i)
     return arr
@@ -93,7 +92,7 @@ def selectionSort(arr):
         min_index = i  # Find the minimum element in remaining unsorted array
         for j in range(i + 1, length):  # Traverse the unsorted subarray to find the minimum element
             if arr[j] < arr[min_index]:  # Update the index of the minimum element if a smaller element is found
-            min_index = j
+                min_index = j
         arr[i], arr[min_index] = arr[min_index], arr[i]  # Swap the found minimum element with the first element
 
 def divqSort(arr, low, high):
