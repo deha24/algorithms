@@ -103,46 +103,46 @@ def selectionSort(arr):
     return arr
 
 def divqSort(arr, low, high):
-    pivot_index = random.randint(low, high)
-    arr[low], arr[pivot_index] = arr[pivot_index], arr[low]
-    pivot = arr[low]
-    i = low + 1
-    for j in range(low + 1, high + 1):
-        if arr[j] <= pivot:
-            arr[i], arr[j] = arr[j], arr[i]
-            i = i + 1
-    arr[low], arr[i - 1] = arr[i - 1], arr[low]
-    return i - 1
+    pivot_index = random.randint(low, high)  # Select a random pivot index
+    arr[low], arr[pivot_index] = arr[pivot_index], arr[low]  # Swap pivot with the first element
+    pivot = arr[low]  # Set pivot to the first element
+    i = low + 1  # Initialize the index for elements greater than pivot
+    for j in range(low + 1, high + 1):  # Traverse the array
+        if arr[j] <= pivot:  # If current element is less than or equal to pivot
+            arr[i], arr[j] = arr[j], arr[i]  # Swap it with the element at index i
+            i = i + 1  # Increment the index for elements greater than pivot
+    arr[low], arr[i - 1] = arr[i - 1], arr[low]  # Place pivot in its correct position
+    return i - 1  # Return the pivot index
 
 def quickSortHelper(arr, low, high):
-    if low < high:
-        pi = divqSort(arr, low, high)
-        quickSortHelper(arr, low, pi - 1)
-        quickSortHelper(arr, pi + 1, high)
+    if low < high:  # If there are elements to be sorted
+        pi = divqSort(arr, low, high)  # Partition the array and get the pivot index
+        quickSortHelper(arr, low, pi - 1)  # Recursively sort the left subarray
+        quickSortHelper(arr, pi + 1, high)  # Recursively sort the right subarray
     return arr
 
 def quickSort(arr):
     return quickSortHelper(arr, 0, len(arr) - 1)
 
 def divqSortleftpivot(arr, low, high):
-    pivot = arr[low]
-    i = low + 1
-    for j in range(low + 1, high + 1):
-        if arr[j] <= pivot:
-            arr[i], arr[j] = arr[j], arr[i]
-            i = i + 1
-    arr[low], arr[i - 1] = arr[i - 1], arr[low]
-    return i - 1
+    pivot = arr[low]  # Set pivot to the first element
+    i = low + 1  # Initialize the index for elements greater than pivot
+    for j in range(low + 1, high + 1):  # Traverse the array
+        if arr[j] <= pivot:  # If current element is less than or equal to pivot
+            arr[i], arr[j] = arr[j], arr[i]  # Swap it with the element at index i
+            i = i + 1  # Increment the index for elements greater than pivot
+    arr[low], arr[i - 1] = arr[i - 1], arr[low]  # Place pivot in its correct position
+    return i - 1  # Return the pivot index
 
 def quickSortleftpivotHelper(arr, low, high):
-    if low < high:
-        pi = divqSortleftpivot(arr, low, high)
-        quickSortleftpivotHelper(arr, low, pi - 1)
-        quickSortleftpivotHelper(arr, pi + 1, high)
+    if low < high:  # If there are elements to be sorted
+        pi = divqSortleftpivot(arr, low, high)  # Partition the array and get the pivot index
+        quickSortleftpivotHelper(arr, low, pi - 1)  # Recursively sort the left subarray
+        quickSortleftpivotHelper(arr, pi + 1, high)  # Recursively sort the right subarray
     return arr
 
 def quickSortleftpivot(arr):
-    return quickSortleftpivotHelper(arr, 0, len(arr) - 1)
+    return quickSortleftpivotHelper(arr, 0, len(arr) - 1)  # Call the helper function with initial indices
 
 def sort_using_algorithm(data, algorithm):
     # This function takes the algorithm identifier as input and returns the sorted data
