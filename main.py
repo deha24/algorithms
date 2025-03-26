@@ -120,9 +120,6 @@ def quickSortHelper(arr, low, high):
 def quickSort(arr):
     return quickSortHelper(arr, 0, len(arr) - 1)
 
-
-
-
 def divqSortleftpivot(arr, low, high):
     pivot = arr[low]
     i = low + 1
@@ -144,8 +141,7 @@ def quickSortleftpivot(arr):
     return quickSortleftpivotHelper(arr, 0, len(arr) - 1)
 
 def sort_using_algorithm(data, algorithm):
-    # This function takes the algorithm identifier as input
-    # However, it always uses the sorted function in Python
+    # This function takes the algorithm identifier as input and returns the sorted data
     if algorithm == 1:
         sorted_data = shell_sort(data)
     elif algorithm == 2:
@@ -175,11 +171,11 @@ def main():
     except EOFError:
         print("Error reading input.")
 
-    # Perform sorting using the specified algorithm (ignored in this example)
+    # Perform sorting using the specified algorithm
     sorted_data = sort_using_algorithm(data, algorithm_number)
 
     # Print the sorted data
-    print("Sorted data:", sorted_data[0:10])
+    print("Sorted data:", sorted_data)
 
 
 if __name__ == "__main__":

@@ -8,13 +8,13 @@ benchmark() {
     # List of supported languages and their run commands
     runrust=""
     runjava=""
-    runpython=""
+    runpython="python3 ../main.py"
     runcpp=""
-    runexample="python3 example.py"
-    runcurrent=$runexample
+    runexample=""
+    runcurrent=$runpython
 
     echo "Benchmarking Algorithm $algorithm with input $input_file"
-    result=$(/usr/bin/time -f "%e" ${runcurrent} --algorithm $algorithm < $input_file 2>&1 >/dev/null)
+    result=$(/usr/bin/time -f "%e" ${runpython} --algorithm $algorithm < $input_file 2>&1 >/dev/null)
     echo "Result $result"
     time=$(echo $result | head -1)  # Extract real time from the time command output
     echo $time
