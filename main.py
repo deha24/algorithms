@@ -143,7 +143,7 @@ def sort_using_algorithm(data, algorithm):
     elif algorithm == 4:
         sorted_data = selectionSort(data)
     elif algorithm == 5:
-        sorted_data = divqSort(data)
+        sorted_data = quickSort(data)
     return sorted_data
 
 def main():
