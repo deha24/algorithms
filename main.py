@@ -43,32 +43,36 @@ def shell_sort(arr):
 #index=current element index
 #indexstop is used to indetify the last element in heap index (used while sorting the heap)
 def heapify(arr,index,sorting,indexstop):
+        right_child=(2*index)+2
+        left_child=(2*index)+1 
         if sorting==False:
-            if indexstop<=(2*index)+1:
+            if indexstop<=left_child:
                 return 0
         else:
-            if indexstop<(2*index)+2:
+            if indexstop<right_child:
                 return 0
         #pulling down element in the heap if smallest
-        if arr[(2*index)+1]>=arr[(2*index)+2] or (sorting==True and indexstop<=(2*index)+2):
-            if (arr[index]<arr[(2*index)+1]) and indexstop>(2*index)+1:
-                arr[index],arr[(2*index)+1]=arr[(2*index)+1],arr[index]
-                heapify(arr,(2*index)+1,sorting,indexstop)
+        if arr[left_child]>=arr[right_child] or (sorting==True and indexstop<=right_child):
+            if (arr[index]<arr[left_child]) and indexstop>left_child:
+                arr[index],arr[left_child]=arr[left_child],arr[index]
+                heapify(arr,left_child,sorting,indexstop)
         else:
-            if arr[index]<arr[(2*index)+2] and indexstop>(2*index)+2:
-                arr[index],arr[(2*index)+2]=arr[(2*index)+2],arr[index]
-                heapify(arr,(2*index)+2,sorting,indexstop)
+            if arr[index]<arr[right_child] and indexstop>right_child:
+                arr[index],arr[right_child]=arr[right_child],arr[index]
+                heapify(arr,right_child,sorting,indexstop)
 
 def heap_sort(arr):
     length=len(arr)
     #creating the heap
     for i in range(length//2-1,-1,-1):
-        if arr[(2*i)+1]>=arr[(2*i)+2]:
-            arr[i],arr[(2*i)+1]=arr[(2*i)+1],arr[i]
-            heapify(arr,(2*i)+1,False,length)
-        else:
-            arr[i],arr[(2*i)+2]=arr[(2*i)+2],arr[i]
-            heapify(arr,(2*i)+2,False,length)
+        right_child=(2*i)+2
+        left_child=(2*i)+1
+        if arr[left_child]>=arr[right_child] and arr[i]<arr[left_child]:
+            arr[i],arr[left_child]=arr[left_child],arr[i]
+            heapify(arr,left_child,False,length)
+        elif arr[i]<arr[right_child]:
+            arr[i],arr[right_child]=arr[right_child],arr[i]
+            heapify(arr,right_child,False,length)
     #sorting the heap
     for i in range(1,length):
         arr[0],arr[length-i]=arr[length-i],arr[0]
@@ -143,13 +147,13 @@ def quickSortleftpivot(arr):
 def sort_using_algorithm(data, algorithm):
     # This function takes the algorithm identifier as input and returns the sorted data
     if algorithm == 1:
-        sorted_data = shell_sort(data)
-    elif algorithm == 2:
-        sorted_data = heap_sort(data)
-    elif algorithm == 3:
         sorted_data = insertionSort(data)
-    elif algorithm == 4:
+    elif algorithm == 2:
+        sorted_data = shell_sort(data)
+    elif algorithm == 3:
         sorted_data = selectionSort(data)
+    elif algorithm == 4:
+        sorted_data = heap_sort(data)
     elif algorithm == 5:
         sorted_data = quickSortleftpivot(data)
     elif algorithm == 6:
