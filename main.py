@@ -81,7 +81,11 @@ def selectionSort(arr):
     return arr
 
 def divqSort(arr, low, high):
-    pivot_index = random.randint(low, high)  # Select a random pivot index
+    # Use median-of-three to select a better pivot for edge cases
+    mid = (low + high) // 2
+    pivot_candidates = [(arr[low], low), (arr[mid], mid), (arr[high], high)]
+    pivot_candidates.sort(key=lambda x: x[0])  # Sort by value
+    pivot_index = pivot_candidates[1][1]  # Choose the median value as pivot
     arr[low], arr[pivot_index] = arr[pivot_index], arr[low]  # Swap pivot with the first element
     pivot = arr[low]  # Set pivot to the first element
     i = low + 1  # Initialize the index for elements greater than pivot
@@ -98,11 +102,10 @@ def quickSortHelper(arr, low, high):
         quickSortHelper(arr, low, pi - 1)  # Recursively sort the left subarray
         quickSortHelper(arr, pi + 1, high)  # Recursively sort the right subarray
     return arr
-
-def quickSort(arr):
-    return quickSortHelper(arr, 0, len(arr) - 1)
-
 def divqSortleftpivot(arr, low, high):
+    # Add a safeguard for sorted or constant arrays by checking for duplicates
+    if low >= high or all(arr[k] == arr[low] for k in range(low, high + 1)):
+        return low  # No sorting needed for constant subarray
     pivot = arr[low]  # Set pivot to the first element
     i = low + 1  # Initialize the index for elements greater than pivot
     for j in range(low + 1, high + 1):  # Traverse the array
