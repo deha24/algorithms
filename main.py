@@ -102,6 +102,10 @@ def quickSortHelper(arr, low, high):
         quickSortHelper(arr, low, pi - 1)  # Recursively sort the left subarray
         quickSortHelper(arr, pi + 1, high)  # Recursively sort the right subarray
     return arr
+
+def quickSort(arr): 
+    return quickSortHelper(arr, 0, len(arr) - 1)  # Call the helper function with initial indices
+
 def divqSortleftpivot(arr, low, high):
     # Add a safeguard for sorted or constant arrays by checking for duplicates
     if low >= high or all(arr[k] == arr[low] for k in range(low, high + 1)):
