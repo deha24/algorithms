@@ -27,7 +27,7 @@ def heapify(arr,index,sorting,indexstop):
             if indexstop<right_child:
                 return 0
         #pulling down element in the heap if smallest
-        if arr[left_child]>=arr[right_child] or (sorting==True and indexstop<=right_child):
+        if indexstop<=right_child or arr[left_child]>=arr[right_child]:
             if (arr[index]<arr[left_child]) and indexstop>left_child:
                 arr[index],arr[left_child]=arr[left_child],arr[index]
                 heapify(arr,left_child,sorting,indexstop)
@@ -42,12 +42,15 @@ def heap_sort(arr):
     for i in range(length//2-1,-1,-1):
         right_child=(2*i)+2
         left_child=(2*i)+1
-        if arr[left_child]>=arr[right_child] and arr[i]<arr[left_child]:
+        if right_child<length and arr[left_child]>=arr[right_child] and arr[i]<arr[left_child]:
             arr[i],arr[left_child]=arr[left_child],arr[i]
-            heapify(arr,left_child,False,length)
-        elif arr[i]<arr[right_child]:
+            heapify(arr,left_child,False,length-1)
+        elif right_child>=length and arr[i]<arr[left_child]:
+            arr[i],arr[left_child]=arr[left_child],arr[i]
+            heapify(arr,left_child,False,length-1)
+        elif right_child<length and arr[i]<arr[right_child]:
             arr[i],arr[right_child]=arr[right_child],arr[i]
-            heapify(arr,right_child,False,length)
+            heapify(arr,right_child,False,length-1)
     #sorting the heap
     for i in range(1,length):
         arr[0],arr[length-i]=arr[length-i],arr[0]
@@ -158,6 +161,7 @@ def sort_using_algorithm(data, algorithm):
 
 
 def main():
+    sys.setrecursionlimit(1500)
     # Command-line arguments: python script.py --algorithm <algorithm_number>
     if len(sys.argv) != 3 or sys.argv[1] != "--algorithm":
         print("Usage: python script.py --algorithm <algorithm_number>")
