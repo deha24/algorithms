@@ -12,31 +12,6 @@ from HelloWorld import HelloWorld
 # Checks if the Python script is being run as the main program (not imported as a module)
 import sys
 import random
-
-def shell_sort(arr):
-    length = len(arr)
-    gap = [1]
-    k=0
-    #generating the gap using Segwick's formula
-    while True:
-        tmp=(4**(k+1))+(3*(2**k))+1 #Segwick's formula
-        if tmp<=length:
-            gap.append(tmp)
-        else:
-            break
-        k+=1
-    #sorting the array using the gap and insertion sort
-    for i in range(len(gap)-1,-1,-1):
-        for j in range(0,length,gap[i]):
-            key=arr[j]
-            k=j-gap[i]
-            while k>=0 and arr[k]>key:
-                arr[k+gap[i]]=arr[k]
-                k-=gap[i]
-            arr[k+gap[i]]=key
-    return arr
-
-
 #bringing the largest element to the top or smallest element to the bottom
 #sorting is true if we are sorting the heap
 #sorting is false if we are creating the heap
@@ -144,6 +119,27 @@ def quickSortleftpivotHelper(arr, low, high):
 def quickSortleftpivot(arr):
     return quickSortleftpivotHelper(arr, 0, len(arr) - 1)  # Call the helper function with initial indices
 
+def shell_sort(arr):
+    length = len(arr)
+    gap = [1]
+    k=0
+    #generating the gap using Segwick's formula
+    while True:
+        tmp=(4**(k+1))+(3*(2**k))+1 #Segwick's formula
+        if tmp<length:
+            gap.append(tmp)
+        else:
+            break
+        k+=1
+    #sorting the array using the gap and insertion sort
+    for i in range(len(gap)-1,-1,-1):
+        tmp = insertionSort(arr[0:length:gap[i]])
+        for j in range(len(tmp)):
+            arr[j*gap[i]]=tmp[j]
+            
+    return arr
+
+
 def sort_using_algorithm(data, algorithm):
     # This function takes the algorithm identifier as input and returns the sorted data
     if algorithm == 1:
@@ -159,6 +155,7 @@ def sort_using_algorithm(data, algorithm):
     elif algorithm == 6:
         sorted_data = quickSort(data)
     return sorted_data
+
 
 def main():
     # Command-line arguments: python script.py --algorithm <algorithm_number>
