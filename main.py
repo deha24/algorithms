@@ -60,7 +60,7 @@ def heap_sort(arr):
 def insertionSort(arr):
     length = len(arr)
     if length <= 1:
-        return  # If the array has 1 or 0 elements, it's already sorted
+        return arr
     for i in range(1, length):
         key = arr[i]  # Select the element to be inserted
         j = i - 1  # Initialize the index of the previous element
@@ -72,21 +72,20 @@ def insertionSort(arr):
 
 def selectionSort(arr):
     length = len(arr)
+    # Finding the minimum element in the array and swapping it with the first element
     for i in range(length):
-        min_index = i  # Find the minimum element in remaining unsorted array
-        for j in range(i + 1, length):  # Traverse the unsorted subarray to find the minimum element
-            if arr[j] < arr[min_index]:  # Update the index of the minimum element if a smaller element is found
+        min_index = i
+        for j in range(i + 1, length):
+            if arr[j] < arr[min_index]:
                 min_index = j
-        arr[i], arr[min_index] = arr[min_index], arr[i]  # Swap the found minimum element with the first element
+        arr[i], arr[min_index] = arr[min_index], arr[i]
     return arr
 
 # Function to partition the array using the median-of-three pivot strategy
 def divqSort(arr, low, high):
-    # Calculate the middle index
     mid = (low + high) // 2
-    # Select pivot candidates (first, middle, last elements)
+    # Select and sort by value candidates for the pivot
     pivot_candidates = [(arr[low], low), (arr[mid], mid), (arr[high], high)]
-    # Sort pivot candidates by value
     pivot_candidates.sort(key=lambda x: x[0])
     # Choose the median as the pivot
     pivot_index = pivot_candidates[1][1]
@@ -127,7 +126,6 @@ def quickSort(arr):
 
 # Function to partition the array using the leftmost element as the pivot
 def divqSortleftpivot(arr, low, high):
-    # Base case: if the subarray is already sorted or has identical elements
     if low >= high or all(arr[k] == arr[low] for k in range(low, high + 1)):
         return low
     pivot = arr[low]
