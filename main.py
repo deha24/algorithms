@@ -27,18 +27,18 @@ def heapify(arr,index,sorting,indexstop):
 def heap_sort(arr):
     length=len(arr)
     #creating the heap
-    for i in range(length//2-1,-1,-1):
+    for i in range((length//2)-1,-1,-1):
         right_child=(2*i)+2
         left_child=(2*i)+1
         if right_child<length and arr[left_child]>=arr[right_child] and arr[i]<arr[left_child]:
             arr[i],arr[left_child]=arr[left_child],arr[i]
-            heapify(arr,left_child,False,length-1)
+            heapify(arr,left_child,False,length)
         elif right_child>=length and arr[i]<arr[left_child]:
             arr[i],arr[left_child]=arr[left_child],arr[i]
-            heapify(arr,left_child,False,length-1)
+            heapify(arr,left_child,False,length)
         elif right_child<length and arr[i]<arr[right_child]:
             arr[i],arr[right_child]=arr[right_child],arr[i]
-            heapify(arr,right_child,False,length-1)
+            heapify(arr,right_child,False,length)
     #sorting the heap
     for i in range(1,length):
         arr[0],arr[length-i]=arr[length-i],arr[0]
@@ -69,7 +69,7 @@ def selectionSort(arr):
         arr[i], arr[min_index] = arr[min_index], arr[i]
     return arr
 
-# Function to partition the array using the median-of-three pivot strategy
+# Function to partition the array using the random pivot strategy
 def divqSort(arr, low, high):
     # Select a random pivot index
     if low > high:
@@ -88,27 +88,23 @@ def divqSort(arr, low, high):
     arr[low], arr[i - 1] = arr[i - 1], arr[low]
     return i - 1
 
-# Helper function for iterative quicksort using a random pivot
+# Recursive quicksort function with tail call optimization to avoid exceeding recursion limit
 def quickSortHelper(arr, low, high):
-    # Use a stack to simulate recursion
-    stack = [(low, high)]
-    while stack:
-        low, high = stack.pop()
-        while low < high:
-            # Partition the array and get the pivot index
-            pi = divqSort(arr, low, high)
-            # Push the larger partition onto the stack to minimize stack size
-            if pi - low < high - pi:
-                stack.append((pi + 1, high))
-                high = pi - 1
-            else:
-                stack.append((low, pi - 1))
-                low = pi + 1
-    return arr
+    while low < high:
+        # Partition the array and get the pivot index
+        pi = divqSort(arr, low, high)
+        # Recur on the smaller partition to minimize recursion depth
+        if pi - low < high - pi:
+            quickSortHelper(arr, low, pi - 1)
+            low = pi + 1  # Tail call optimization
+        else:
+            quickSortHelper(arr, pi + 1, high)
+            high = pi - 1  # Tail call optimization
 
 # Function to perform quicksort using a random pivot
 def quickSort(arr):
-    return quickSortHelper(arr, 0, len(arr) - 1)
+    quickSortHelper(arr, 0, len(arr) - 1)
+    return arr
 
 # Function to partition the array using the leftmost element as the pivot
 def divqSortleftpivot(arr, low, high):
