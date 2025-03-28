@@ -121,22 +121,14 @@ def divqSortleftpivot(arr, low, high):
     arr[low], arr[i - 1] = arr[i - 1], arr[low]
     return i - 1
 
-# Helper function for iterative quicksort using the leftmost pivot
+# Helper function for recursive quicksort using the leftmost pivot
 def quickSortleftpivotHelper(arr, low, high):
-    # Use a stack to simulate recursion
-    stack = [(low, high)]
-    while stack:
-        low, high = stack.pop()
-        while low < high:
-            # Partition the array and get the pivot index
-            pi = divqSortleftpivot(arr, low, high)
-            # Push the larger partition onto the stack to minimize stack size
-            if pi - low < high - pi:
-                stack.append((pi + 1, high))
-                high = pi - 1
-            else:
-                stack.append((low, pi - 1))
-                low = pi + 1
+    if low < high:
+        # Partition the array and get the pivot index
+        pi = divqSortleftpivot(arr, low, high)
+        # Recur on the left and right partitions
+        quickSortleftpivotHelper(arr, low, pi - 1)
+        quickSortleftpivotHelper(arr, pi + 1, high)
     return arr
 
 # Function to perform quicksort using the leftmost element as the pivot
@@ -165,6 +157,7 @@ def shell_sort(arr):
 
 
 def sort_using_algorithm(data, algorithm):
+    print("before sorting",data)
     # This function takes the algorithm identifier as input and returns the sorted data
     if algorithm == 1:
         sorted_data = insertionSort(data)
