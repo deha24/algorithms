@@ -1,15 +1,3 @@
-"""
-To run this file issue this command:
-python3 HelloWorld.py
-
-Python as a interpreted language executes code directly without a separate compilation step, 
-translating and running the source code on-the-fly during execution.
-"""
-import sys
-from HelloWorld import HelloWorld
-
-
-# Checks if the Python script is being run as the main program (not imported as a module)
 import sys
 import random
 #bringing the largest element to the top or smallest element to the bottom
@@ -83,12 +71,10 @@ def selectionSort(arr):
 
 # Function to partition the array using the median-of-three pivot strategy
 def divqSort(arr, low, high):
-    mid = (low + high) // 2
-    # Select and sort by value candidates for the pivot
-    pivot_candidates = [(arr[low], low), (arr[mid], mid), (arr[high], high)]
-    pivot_candidates.sort(key=lambda x: x[0])
-    # Choose the median as the pivot
-    pivot_index = pivot_candidates[1][1]
+    # Select a random pivot index
+    if low > high:
+        return low  # Return low as the pivot index if the range is invalid
+    pivot_index = random.randint(low, high)
     # Swap the pivot with the first element
     arr[low], arr[pivot_index] = arr[pivot_index], arr[low]
     pivot = arr[low]
@@ -102,7 +88,7 @@ def divqSort(arr, low, high):
     arr[low], arr[i - 1] = arr[i - 1], arr[low]
     return i - 1
 
-# Helper function for iterative quicksort using the median-of-three pivot
+# Helper function for iterative quicksort using a random pivot
 def quickSortHelper(arr, low, high):
     # Use a stack to simulate recursion
     stack = [(low, high)]
@@ -120,7 +106,7 @@ def quickSortHelper(arr, low, high):
                 low = pi + 1
     return arr
 
-# Function to perform quicksort using the median-of-three pivot
+# Function to perform quicksort using a random pivot
 def quickSort(arr):
     return quickSortHelper(arr, 0, len(arr) - 1)
 
@@ -200,7 +186,6 @@ def sort_using_algorithm(data, algorithm):
 
 
 def main():
-    sys.setrecursionlimit(1500)
     # Command-line arguments: python script.py --algorithm <algorithm_number>
     if len(sys.argv) != 3 or sys.argv[1] != "--algorithm":
         print("Usage: python script.py --algorithm <algorithm_number>")
