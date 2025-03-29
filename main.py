@@ -5,21 +5,16 @@ import random
 #sorting is false if we are creating the heap
 #index=current element index
 #indexstop is used to indetify the last element in heap index (used while sorting the heap)
+# quicksort, heap, swap insertion, shellsort sedgwick no arr
 def heapify(arr,index,sorting,indexstop):
         right_child=(2*index)+2
         left_child=(2*index)+1 
-        if sorting==False:
-            if indexstop<=left_child:
-                return 0
-        else:
-            if indexstop<right_child:
-                return 0
         #pulling down element in the heap if smallest
-        if indexstop<=right_child or arr[left_child]>=arr[right_child]:
-            if (arr[index]<arr[left_child]) and indexstop>left_child:
+        if indexstop>left_child and (indexstop<=right_child or arr[left_child]>=arr[right_child]):
+            if arr[index]<arr[left_child]:
                 arr[index],arr[left_child]=arr[left_child],arr[index]
                 heapify(arr,left_child,sorting,indexstop)
-        else:
+        elif indexstop>left_child and arr[left_child]<arr[right_child]:
             if arr[index]<arr[right_child] and indexstop>right_child:
                 arr[index],arr[right_child]=arr[right_child],arr[index]
                 heapify(arr,right_child,sorting,indexstop)
@@ -28,17 +23,7 @@ def heap_sort(arr):
     length=len(arr)
     #creating the heap
     for i in range((length//2)-1,-1,-1):
-        right_child=(2*i)+2
-        left_child=(2*i)+1
-        if right_child<length and arr[left_child]>=arr[right_child] and arr[i]<arr[left_child]:
-            arr[i],arr[left_child]=arr[left_child],arr[i]
-            heapify(arr,left_child,False,length)
-        elif right_child>=length and arr[i]<arr[left_child]:
-            arr[i],arr[left_child]=arr[left_child],arr[i]
-            heapify(arr,left_child,False,length)
-        elif right_child<length and arr[i]<arr[right_child]:
-            arr[i],arr[right_child]=arr[right_child],arr[i]
-            heapify(arr,right_child,False,length)
+        heapify(arr,i,False,length)
     #sorting the heap
     for i in range(1,length):
         arr[0],arr[length-i]=arr[length-i],arr[0]
@@ -100,17 +85,18 @@ def quickSortHelper(arr, low, high):
         else:
             quickSortHelper(arr, pi + 1, high)
             high = pi - 1  # Tail call optimization
+    return arr
 
 # Function to perform quicksort using a random pivot
 def quickSort(arr):
-    quickSortHelper(arr, 0, len(arr) - 1)
+    quickSortHelper(arr, 0, len(arr) - 1)#, lambda arr, low, high: random.randint(low, high))
     return arr
 
 # Function to partition the array using the leftmost element as the pivot
-def divqSortleftpivot(arr, low, high):
+def divqSortleftpivot(arr, low, high):#, pivot_f)
     if low >= high or all(arr[k] == arr[low] for k in range(low, high + 1)):
         return low
-    pivot = arr[low]
+    pivot = arr[low] #pivot_f(arr, low, high)
     i = low + 1
     # Partition the array around the pivot
     for j in range(low + 1, high + 1):
@@ -137,24 +123,19 @@ def quickSortleftpivot(arr):
 
 def shell_sort(arr):
     length = len(arr)
-    gap = [1]
-    k=0
-    #generating the gap using Segwick's formula
-    while True:
-        tmp=(4**(k+1))+(3*(2**k))+1 #Segwick's formula
-        if tmp<length:
-            gap.append(tmp)
-        else:
-            break
-        k+=1
     #sorting the array using the gap and insertion sort
-    for i in range(len(gap)-1,-1,-1):
-        tmp = insertionSort(arr[0:length:gap[i]])
+    k=length//23
+    while k>=0:
+        gap = (4**(k+1))+(3*(2**k))+1 #generating the gap using Segwick's formula
+        if gap>length:
+            k-=1
+            continue
+        tmp = insertionSort(arr[0:length:gap])
         for j in range(len(tmp)):
-            arr[j*gap[i]]=tmp[j]
-            
+            arr[j*gap]=tmp[j]
+        k-=1
+    arr = insertionSort(arr[0:length:1])
     return arr
-
 
 def sort_using_algorithm(data, algorithm):
     print("before sorting",data)
