@@ -35,12 +35,10 @@ def insertionSort(arr):
     if length <= 1:
         return arr
     for i in range(1, length):
-        key = arr[i]  # Select the element to be inserted
-        j = i - 1  # Initialize the index of the previous element
+        key, j = arr[i], i - 1  # Select the element to be inserted and initialize the index of the previous element
         while j >= 0 and key < arr[j]:  # Move elements of arr[0..i-1], that are greater than key, to one position ahead of their current position
-            arr[j + 1] = arr[j]
-            j = j - 1
-        arr[j + 1] = key  # Place key at after the element just smaller than it
+            arr[j + 1], j = arr[j], j - 1
+        arr[j + 1] = key  # Place key after the element just smaller than it
     return arr
 
 def selectionSort(arr):
