@@ -1,0 +1,16 @@
+Algorithm,InputSize,Time
+quick_sort_left_pivot,4,0.02
+quick_sort_left_pivot,8,0.02
+quick_sort_left_pivot,16,0.02
+quick_sort_left_pivot,32,0.02
+quick_sort_left_pivot,64,0.02
+quick_sort_left_pivot,128,0.02
+quick_sort_left_pivot,256,0.02
+quick_sort_left_pivot,512,0.03
+quick_sort_left_pivot,1024,0.05
+quick_sort_left_pivot,2048,0.12
+quick_sort_left_pivot,4096,0.41
+quick_sort_left_pivot,8192,1.60
+quick_sort_left_pivot,16384,6.22
+quick_sort_left_pivot,32768,22.33
+quick_sort_left_pivot,65536,89.45

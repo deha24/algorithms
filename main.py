@@ -154,6 +154,7 @@ def sort_using_algorithm(data, algorithm):
 
 
 def main():
+    sys.setrecursionlimit((2**16)+1)
     # Command-line arguments: python script.py --algorithm <algorithm_number>
     if len(sys.argv) != 3 or sys.argv[1] != "--algorithm":
         print("Usage: python script.py --algorithm <algorithm_number>")

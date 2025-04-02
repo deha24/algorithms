@@ -1,0 +1,15 @@
+Algorithm,InputSize,Time
+shell_sort,4,0.02
+shell_sort,8,0.02
+shell_sort,16,0.02
+shell_sort,32,0.02
+shell_sort,64,0.02
+shell_sort,128,0.02
+shell_sort,256,0.02
+shell_sort,512,0.03
+shell_sort,1024,0.03
+shell_sort,2048,0.08
+shell_sort,4096,0.24
+shell_sort,8192,0.93
+shell_sort,16384,3.58
+shell_sort,32768,14.70
