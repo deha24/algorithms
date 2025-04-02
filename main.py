@@ -52,72 +52,36 @@ def selectionSort(arr):
         arr[i], arr[min_index] = arr[min_index], arr[i]
     return arr
 
-# Function to partition the array using the random pivot strategy
-def divqSort(arr, low, high):
-    # Select a random pivot index
-    if low > high:
-        return low  # Return low as the pivot index if the range is invalid
-    pivot_index = random.randint(low, high)
-    # Swap the pivot with the first element
+# Function to partition the array using a pivot strategy
+def partition(arr, low, high, pivot_func):
+    if low >= high or all(arr[k] == arr[low] for k in range(low, high + 1)):
+        return low
+    pivot_index = pivot_func(arr, low, high)
     arr[low], arr[pivot_index] = arr[pivot_index], arr[low]
     pivot = arr[low]
     i = low + 1
-    # Partition the array around the pivot
     for j in range(low + 1, high + 1):
         if arr[j] <= pivot:
             arr[i], arr[j] = arr[j], arr[i]
             i += 1
-    # Place the pivot in its correct position
     arr[low], arr[i - 1] = arr[i - 1], arr[low]
     return i - 1
 
-# Recursive quicksort function with tail call optimization to avoid exceeding recursion limit
-def quickSortHelper(arr, low, high):
+# Recursive quicksort function with tail call optimization
+def quickSortHelper(arr, low, high, pivot_func):
     while low < high:
-        # Partition the array and get the pivot index
-        pi = divqSort(arr, low, high)
-        # Recur on the smaller partition to minimize recursion depth
+        pi = partition(arr, low, high, pivot_func)
         if pi - low < high - pi:
-            quickSortHelper(arr, low, pi - 1)
-            low = pi + 1  # Tail call optimization
+            quickSortHelper(arr, low, pi - 1, pivot_func)
+            low = pi + 1
         else:
-            quickSortHelper(arr, pi + 1, high)
-            high = pi - 1  # Tail call optimization
+            quickSortHelper(arr, pi + 1, high, pivot_func)
+            high = pi - 1
     return arr
 
-# Function to perform quicksort using a random pivot
-def quickSort(arr):
-    quickSortHelper(arr, 0, len(arr) - 1)#, lambda arr, low, high: random.randint(low, high))
-    return arr
-
-# Function to partition the array using the leftmost element as the pivot
-def divqSortleftpivot(arr, low, high):#, pivot_f)
-    if low >= high or all(arr[k] == arr[low] for k in range(low, high + 1)):
-        return low
-    pivot = arr[low] #pivot_f(arr, low, high)
-    i = low + 1
-    # Partition the array around the pivot
-    for j in range(low + 1, high + 1):
-        if arr[j] <= pivot:
-            arr[i], arr[j] = arr[j], arr[i]
-            i += 1
-    # Place the pivot in its correct position
-    arr[low], arr[i - 1] = arr[i - 1], arr[low]
-    return i - 1
-
-# Helper function for recursive quicksort using the leftmost pivot
-def quickSortleftpivotHelper(arr, low, high):
-    if low < high:
-        # Partition the array and get the pivot index
-        pi = divqSortleftpivot(arr, low, high)
-        # Recur on the left and right partitions
-        quickSortleftpivotHelper(arr, low, pi - 1)
-        quickSortleftpivotHelper(arr, pi + 1, high)
-    return arr
-
-# Function to perform quicksort using the leftmost element as the pivot
-def quickSortleftpivot(arr):
-    return quickSortleftpivotHelper(arr, 0, len(arr) - 1)
+# General quicksort function that accepts a pivot strategy
+def quickSort(arr, pivot_func=lambda arr, low, high: random.randint(low, high)):
+    return quickSortHelper(arr, 0, len(arr) - 1, pivot_func)
 
 def shell_sort(arr):
     length = len(arr)
