@@ -92,9 +92,10 @@ def shell_sort(arr):
         if gap>length:
             k-=1
             continue
-        tmp = insertionSort(arr[0:length:gap])
-        for j in range(len(tmp)):
-            arr[j*gap]=tmp[j]
+        for i in range(gap):
+            tmp = insertionSort(arr[i:length:gap])
+            for j in range(len(tmp)):
+                arr[(gap*j)+i]=tmp[j]
         k-=1
     arr = insertionSort(arr[0:length:1])
     return arr
@@ -111,7 +112,7 @@ def sort_using_algorithm(data, algorithm):
     elif algorithm == 4:
         sorted_data = heap_sort(data)
     elif algorithm == 5:
-        sorted_data = quickSortleftpivot(data)
+        sorted_data = quickSort(data, pivot_func=lambda arr, low, high: low)
     elif algorithm == 6:
         sorted_data = quickSort(data)
     return sorted_data
